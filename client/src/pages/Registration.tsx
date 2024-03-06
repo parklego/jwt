@@ -10,18 +10,25 @@ import {
   MDBIcon,
 } from "mdb-react-ui-kit";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-function App() {
+function Registration() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     axios
       .post("http://localhost:3001/register", { username, email, password })
-      .then((res) => console.log(res.data))
+      .then(() => {
+        alert("success");
+        navigate("/login");
+      })
+
       .catch((err) => console.log(err));
   };
   return (
@@ -92,4 +99,4 @@ function App() {
   );
 }
 
-export default App;
+export default Registration;
