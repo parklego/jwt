@@ -34,7 +34,7 @@ const reGenerateAccessToken = (req, res) => {
   } else {
     jwt.verify(refreshToken, "refresh-token-secret-key", (err, decoded) => {
       if (err) {
-        res.json({
+        return res.json({
           vaild: false,
           message: "invalid refresh token",
         });

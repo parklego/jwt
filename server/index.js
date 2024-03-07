@@ -81,7 +81,7 @@ app.post("/login", (req, res) => {
 
 app.get("/dashboard", varifyUser, (req, res) => {
   return res.json({
-    vaild: true,
+    valid: true,
     message: "authorized",
   });
 });
