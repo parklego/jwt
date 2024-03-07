@@ -9,8 +9,9 @@ import {
   MDBInput,
   MDBIcon,
 } from "mdb-react-ui-kit";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { varifyUser } from "../utils/auth";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -20,7 +21,11 @@ function Login() {
 
   axios.defaults.withCredentials = true;
 
-  const handleSubmit = (e) => {
+  useEffect(() => {
+    varifyUser(navigate);
+  }, [navigate]);
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     axios
