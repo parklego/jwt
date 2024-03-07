@@ -2,12 +2,14 @@ import express from "express";
 import cors from "cors";
 import mongoose from "mongoose";
 import jwt from "jsonwebtoken";
-
+import cookieParser from "cookie-parser";
 import StudentModel from "./models/Student.js";
+import { varifyUser } from "./util/util.js";
 
 const app = express();
 
 app.use(express.json());
+app.use(cookieParser());
 app.use(
   cors({
     origin: ["http://localhost:5173"],
@@ -66,15 +68,22 @@ app.post("/login", (req, res) => {
             secure: true,
             sameSite: "strict",
           });
-          res.json({ login: true });
+          return res.json({ login: true });
         }
       } else {
-        res.json({ login: false, message: "Not allowed" });
+        return res.json({ login: false, message: "Not allowed" });
       }
     })
     .catch((err) => {
-      res.json(err);
+      return res.json(err);
     });
+});
+
+app.get("/dashboard", varifyUser, (req, res) => {
+  return res.json({
+    vaild: true,
+    message: "authorized",
+  });
 });
 
 app.listen(3001, () => {
